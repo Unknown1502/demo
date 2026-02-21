@@ -518,7 +518,6 @@ function openForm(editId) {
   const colorIn = $('#fColor');
   const tagsIn = $('#fTags');
   const urlIn = $('#fUrl');
-  const imageIn = $('#fImage');
   const imagePreview = $('#fImagePreview');
 
   if (editId) {
@@ -577,7 +576,7 @@ if (fmCancel) fmCancel.addEventListener('click', closeForm);
 if (fmBackdrop) fmBackdrop.addEventListener('click', closeForm);
 
 if (projForm) {
-  projForm.addEventListener('submit', e => {
+  projForm.addEventListener('submit', async e => {
     e.preventDefault();
     const id = $('#fId').value.trim();
     const title = $('#fTitle').value.trim();
@@ -593,35 +592,43 @@ if (projForm) {
       return;
     }
 
-    let projects = loadProjects();
-    const existingProject = projects.find(p => p.id === id);
+    let imageUrl = '';
+    const existingProject = loadProjects().find(p => p.id === id);
     
     if (imageFile) {
       const reader = new FileReader();
-      reader.onload = function(e) {
-        const imageData = e.target.result;
-        if (id) {
-          projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url, image: imageData } : p);
-        } else {
-          projects.push({ id: uid(), title, desc, lang, color, tags, url, image: imageData });
-        }
-        saveProjects(projects);
-        closeForm();
-        renderAdminList();
-        renderProjects();
-      };
       reader.readAsDataURL(imageFile);
+      await new Promise(resolve => {
+        reader.onload = async () => {
+          try {
+            const response = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ image: reader.result })
+            });
+            const data = await response.json();
+            imageUrl = data.url;
+            resolve();
+          } catch {
+            imageUrl = existingProject?.image || '';
+            resolve();
+          }
+        };
+      });
     } else {
-      if (id) {
-        projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url, image: existingProject?.image } : p);
-      } else {
-        projects.push({ id: uid(), title, desc, lang, color, tags, url });
-      }
-      saveProjects(projects);
-      closeForm();
-      renderAdminList();
-      renderProjects();
+      imageUrl = existingProject?.image || '';
     }
+
+    let projects = loadProjects();
+    if (id) {
+      projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url, image: imageUrl } : p);
+    } else {
+      projects.push({ id: uid(), title, desc, lang, color, tags, url, image: imageUrl });
+    }
+    saveProjects(projects);
+    closeForm();
+    renderAdminList();
+    renderProjects();
   });
 }
 
@@ -645,7 +652,7 @@ if (imageInput && imagePreview) {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = function(e) {
+      reader.onload = e => {
         imagePreview.src = e.target.result;
         imagePreview.style.display = 'block';
       };
