@@ -408,6 +408,7 @@ function renderProjects() {
     item.innerHTML = `
       <div class="pi-num">${String(i + 1).padStart(2, '0')}</div>
       <div class="pi-body">
+        ${p.image ? `<img src="${p.image}" alt="${escHtml(p.title)}" style="width:100%; max-height:200px; object-fit:cover; border-radius:12px; margin-bottom:12px;" />` : ''}
         <div class="pi-top">
           <h3>${escHtml(p.title)}</h3>
           <div class="pi-pills"><span style="--lc:${p.color}">${escHtml(p.lang || '')}</span></div>
@@ -517,6 +518,8 @@ function openForm(editId) {
   const colorIn = $('#fColor');
   const tagsIn = $('#fTags');
   const urlIn = $('#fUrl');
+  const imageIn = $('#fImage');
+  const imagePreview = $('#fImagePreview');
 
   if (editId) {
     const p = loadProjects().find(x => x.id === editId);
@@ -529,11 +532,18 @@ function openForm(editId) {
     colorIn.value = p.color || '#6ee7b7';
     tagsIn.value = (p.tags || []).join(', ');
     urlIn.value = p.url || '';
+    if (p.image) {
+      imagePreview.src = p.image;
+      imagePreview.style.display = 'block';
+    } else {
+      imagePreview.style.display = 'none';
+    }
   } else {
     titleEl.textContent = 'Add Project';
     $('#projForm').reset();
     idEl.value = '';
     colorIn.value = '#6ee7b7';
+    imagePreview.style.display = 'none';
   }
 
   if (modal) modal.classList.add('fm-show');
@@ -576,6 +586,7 @@ if (projForm) {
     const color = $('#fColor').value;
     const tags = $('#fTags').value.split(',').map(t => t.trim()).filter(Boolean);
     const url = $('#fUrl').value.trim();
+    const imageFile = $('#fImage').files[0];
 
     if (!title || !desc) {
       alert('Title and description are required.');
@@ -583,15 +594,34 @@ if (projForm) {
     }
 
     let projects = loadProjects();
-    if (id) {
-      projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url } : p);
+    const existingProject = projects.find(p => p.id === id);
+    
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const imageData = e.target.result;
+        if (id) {
+          projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url, image: imageData } : p);
+        } else {
+          projects.push({ id: uid(), title, desc, lang, color, tags, url, image: imageData });
+        }
+        saveProjects(projects);
+        closeForm();
+        renderAdminList();
+        renderProjects();
+      };
+      reader.readAsDataURL(imageFile);
     } else {
-      projects.push({ id: uid(), title, desc, lang, color, tags, url });
+      if (id) {
+        projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url, image: existingProject?.image } : p);
+      } else {
+        projects.push({ id: uid(), title, desc, lang, color, tags, url });
+      }
+      saveProjects(projects);
+      closeForm();
+      renderAdminList();
+      renderProjects();
     }
-    saveProjects(projects);
-    closeForm();
-    renderAdminList();
-    renderProjects();
   });
 }
 
@@ -606,6 +636,25 @@ document.addEventListener('keydown', e => {
     closeAdmin();
   }
 });
+
+// Image preview on file select
+const imageInput = $('#fImage');
+const imagePreview = $('#fImagePreview');
+if (imageInput && imagePreview) {
+  imageInput.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        imagePreview.src = e.target.result;
+        imagePreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      imagePreview.style.display = 'none';
+    }
+  });
+}
 
 // Show FAB always (it's the access point)
 const fabEl = $('#admFab');

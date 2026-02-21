@@ -455,6 +455,11 @@
         <label for="fUrl">GitHub URL</label>
         <input type="url" id="fUrl" placeholder="https://github.com/…" />
       </div>
+      <div class="fm-group">
+        <label for="fImage">Project Image <span class="fm-hint">(optional)</span></label>
+        <input type="file" id="fImage" accept="image/*" />
+        <img id="fImagePreview" style="display:none; max-width:100%; margin-top:10px; border-radius:10px; border:1px solid var(--bd);" />
+      </div>
       <div class="fm-actions">
         <button type="button" class="fm-cancel" id="fmCancel">Cancel</button>
         <button type="submit" class="fm-save">Save Project</button>

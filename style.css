@@ -1558,3 +1558,8 @@ body {
 
 /*  No-link proj btn placeholder  */
 .pi-nolnk { visibility: hidden; pointer-events: none; }
+
+.fm-group input[type="file"] {
+  padding: 8px 10px;
+  cursor: pointer;
+}
