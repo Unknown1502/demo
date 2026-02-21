@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prajwal Sutar — Cybersecurity Engineer</title>
+  <meta name="description" content="Cybersecurity Engineer, SOC Analyst, Splunk MVP. Building AI/ML-powered security tools." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+
+  <!-- Noise Overlay -->
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Side Navigation Dots -->
+  <nav class="side-nav" id="sideNav" aria-label="Page sections">
+    <a href="#home"     class="side-dot" data-tip="Home"></a>
+    <a href="#about"    class="side-dot" data-tip="About"></a>
+    <a href="#skills"   class="side-dot" data-tip="Skills"></a>
+    <a href="#projects" class="side-dot" data-tip="Projects"></a>
+    <a href="#contact"  class="side-dot" data-tip="Contact"></a>
+  </nav>
+
+  <!-- ─────────── NAVBAR ─────────── -->
+  <header class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a class="nav-logo magnetic" href="#home">
+        <div class="logo-mark">PS</div>
+        <span class="logo-text">prajwal<span class="accent-dot">.</span>dev</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="#about"    class="nav-link">About</a>
+        <a href="#skills"   class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact"  class="nav-link">Contact</a>
+      </nav>
+
+      <a class="btn-hire magnetic" href="mailto:prajwalsutar116@gmail.com">
+        <span>Hire Me</span>
+      </a>
+
+      <button class="burger" id="burger" aria-label="Toggle menu" aria-expanded="false">
+        <span class="b-line"></span>
+        <span class="b-line"></span>
+        <span class="b-line"></span>
+      </button>
+    </div>
+
+    <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
+      <a href="#about"    class="drawer-link">About</a>
+      <a href="#skills"   class="drawer-link">Skills</a>
+      <a href="#projects" class="drawer-link">Projects</a>
+      <a href="#contact"  class="drawer-link">Contact</a>
+      <a class="drawer-cta" href="mailto:prajwalsutar116@gmail.com">Let's Talk →</a>
+    </div>
+  </header>
+
+
+  <!-- ─────────── HERO ─────────── -->
+  <section class="hero" id="home">
+    <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <div class="hero-mesh" aria-hidden="true"></div>
+
+    <div class="container hero-body">
+      <div class="hero-left">
+        <div class="hero-status">
+          <span class="pulse-ring" aria-hidden="true"></span>
+          <span class="pulse-core" aria-hidden="true"></span>
+          <span>Available for new roles</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="ht-line reveal-up" style="--d:0ms">Securing</span>
+          <span class="ht-line clip-text reveal-up" style="--d:80ms">Digital Worlds</span>
+          <span class="ht-line reveal-up" style="--d:160ms">with Code.</span>
+        </h1>
+
+        <p class="hero-desc reveal-up" style="--d:240ms">
+          Cybersecurity Engineer · SOC Analyst · AI/ML Security Developer<br>
+          <span id="typewriter" class="mono"></span><span class="tw-cursor" aria-hidden="true">|</span>
+        </p>
+
+        <div class="hero-ctas reveal-up" style="--d:320ms">
+          <a class="btn-primary magnetic" href="#projects">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="13 17 18 12 13 7"/><polyline points="6 17 11 12 6 7"/></svg>
+            View Projects
+          </a>
+          <a class="btn-outline magnetic" href="https://github.com/Unknown1502" target="_blank" rel="noopener">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="hero-metrics reveal-up" style="--d:400ms">
+          <div class="hm-item">
+            <span class="hm-num counter" data-count="25">0</span><span class="hm-sfx">+</span>
+            <span class="hm-lbl">Repositories</span>
+          </div>
+          <div class="hm-sep"></div>
+          <div class="hm-item">
+            <span class="hm-num counter" data-count="160">0</span><span class="hm-sfx">+</span>
+            <span class="hm-lbl">Contributions</span>
+          </div>
+          <div class="hm-sep"></div>
+          <div class="hm-item">
+            <span class="hm-num">MVP</span>
+            <span class="hm-lbl">Splunk Award</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal-up" style="--d:100ms">
+        <div class="avatar-frame">
+          <div class="av-ring r1" aria-hidden="true"></div>
+          <div class="av-ring r2" aria-hidden="true"></div>
+          <div class="av-ring r3" aria-hidden="true"></div>
+          <img
+            class="av-img"
+            src="https://avatars.githubusercontent.com/u/155574376?v=4"
+            alt="Prajwal Sutar"
+            loading="eager"
+          />
+          <div class="av-chip chip-tl">🛡️ Pentest</div>
+          <div class="av-chip chip-tr">🧠 AI/ML</div>
+          <div class="av-chip chip-bl">☁️ Cloud</div>
+          <div class="av-chip chip-br">📊 Splunk</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-scroll" aria-hidden="true">
+      <span class="hs-label">scroll</span>
+      <div class="hs-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ─────────── ABOUT ─────────── -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="eyebrow reveal-up">
+        <span class="ew-line"></span>About Me
+      </div>
+
+      <div class="bento">
+
+        <div class="b-card b-bio reveal-up">
+          <div class="b-tag">Introduction</div>
+          <h2 class="b-heading">
+            I turn threats into<br><span class="clip-text">opportunities.</span>
+          </h2>
+          <p>B.E. Computer Engineering graduate fiercely focused on Cybersecurity. I build real-world security tools, ML-based detection systems, and SOC dashboards that make organizations resilient.</p>
+          <p>Recognized as a <strong>Splunk MVP Winner</strong> — I bridge offensive security, cloud defense, and AI-powered automation into unified solutions.</p>
+          <div class="b-actions">
+            <a class="btn-primary magnetic" href="mailto:prajwalsutar116@gmail.com">Let's Connect</a>
+            <a class="b-link" href="https://www.linkedin.com/in/prajwalsutar116" target="_blank" rel="noopener">LinkedIn ↗</a>
+          </div>
+        </div>
+
+        <div class="b-card b-award reveal-up">
+          <div class="award-glow" aria-hidden="true"></div>
+          <div class="award-emoji">🏆</div>
+          <div class="award-sup">Winner</div>
+          <h3>Splunk MVP</h3>
+          <p>Recognized for outstanding SIEM engineering, threat detection pipelines, and real-time dashboard excellence.</p>
+        </div>
+
+        <div class="b-card b-thm reveal-up">
+          <div class="b-tag">Platform</div>
+          <div class="thm-emoji">⚔️</div>
+          <h3>TryHackMe</h3>
+          <p class="thm-handle">@unknownroot</p>
+          <a class="b-link" href="https://tryhackme.com/r/p/unknownroot" target="_blank" rel="noopener">View Profile ↗</a>
+        </div>
+
+        <div class="b-card b-stack reveal-up">
+          <div class="b-tag">Primary Stack</div>
+          <div class="spill">
+            <span style="--c:#3b82f6">Python</span>
+            <span style="--c:#f59e0b">Splunk</span>
+            <span style="--c:#10b981">Bash</span>
+            <span style="--c:#8b5cf6">React</span>
+            <span style="--c:#ef4444">Kali</span>
+            <span style="--c:#06b6d4">Cloud</span>
+            <span style="--c:#ec4899">ML/AI</span>
+            <span style="--c:#14b8a6">TypeScript</span>
+            <span style="--c:#a78bfa">LSTM</span>
+          </div>
+        </div>
+
+        <div class="b-card b-gh reveal-up">
+          <div class="b-tag">GitHub</div>
+          <div class="gh-row">
+            <div class="gh-s"><span class="counter" data-count="25">0</span><em>Repos</em></div>
+            <div class="gh-s"><span class="counter" data-count="160">0</span><em>Commits</em></div>
+            <div class="gh-s"><span class="counter" data-count="3">0</span><em>Stars</em></div>
+          </div>
+          <a class="b-link" href="https://github.com/Unknown1502" target="_blank" rel="noopener">Unknown1502 ↗</a>
+        </div>
+
+        <div class="b-card b-edu reveal-up">
+          <div class="edu-icon">🎓</div>
+          <h3>B.E. Computer Engineering</h3>
+          <p>Specialized in cybersecurity, network defense, and intelligent systems design.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────── SKILLS ─────────── -->
+  <section class="section skills-section" id="skills">
+    <div class="ticker-wrap" aria-hidden="true">
+      <div class="ticker">
+        <span>Kali Linux</span><span class="sep">✦</span>
+        <span>Metasploit</span><span class="sep">✦</span>
+        <span>Burp Suite</span><span class="sep">✦</span>
+        <span>Wireshark</span><span class="sep">✦</span>
+        <span>Splunk SIEM</span><span class="sep">✦</span>
+        <span>IDS / NIDS</span><span class="sep">✦</span>
+        <span>Python</span><span class="sep">✦</span>
+        <span>Machine Learning</span><span class="sep">✦</span>
+        <span>React</span><span class="sep">✦</span>
+        <span>TypeScript</span><span class="sep">✦</span>
+        <span>Cloud Security</span><span class="sep">✦</span>
+        <span>NIST CSF</span><span class="sep">✦</span>
+        <span>Threat Modeling</span><span class="sep">✦</span>
+        <span>LSTM</span><span class="sep">✦</span>
+        <span>Kali Linux</span><span class="sep">✦</span>
+        <span>Metasploit</span><span class="sep">✦</span>
+        <span>Burp Suite</span><span class="sep">✦</span>
+        <span>Wireshark</span><span class="sep">✦</span>
+        <span>Splunk SIEM</span><span class="sep">✦</span>
+        <span>IDS / NIDS</span><span class="sep">✦</span>
+        <span>Python</span><span class="sep">✦</span>
+        <span>Machine Learning</span><span class="sep">✦</span>
+        <span>React</span><span class="sep">✦</span>
+        <span>TypeScript</span><span class="sep">✦</span>
+        <span>Cloud Security</span><span class="sep">✦</span>
+        <span>NIST CSF</span><span class="sep">✦</span>
+        <span>Threat Modeling</span><span class="sep">✦</span>
+        <span>LSTM</span><span class="sep">✦</span>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="eyebrow reveal-up"><span class="ew-line"></span>Expertise</div>
+      <h2 class="section-heading reveal-up">Tech Stack &amp; <span class="clip-text">Skills</span></h2>
+
+      <div class="skill-grid">
+
+        <div class="sk-card reveal-up">
+          <div class="sk-head"><span class="sk-icon" style="--ic:#ef4444">🛡️</span><h3>Security &amp; Networking</h3></div>
+          <div class="bars">
+            <div class="bar-row"><span>Penetration Testing</span><div class="bar-track"><div class="bar-fill" data-w="90"></div></div><span class="pct">90%</span></div>
+            <div class="bar-row"><span>SIEM / Splunk</span><div class="bar-track"><div class="bar-fill" data-w="95"></div></div><span class="pct">95%</span></div>
+            <div class="bar-row"><span>IDS / NIDS / HIDS</span><div class="bar-track"><div class="bar-fill" data-w="85"></div></div><span class="pct">85%</span></div>
+            <div class="bar-row"><span>Threat Modeling</span><div class="bar-track"><div class="bar-fill" data-w="82"></div></div><span class="pct">82%</span></div>
+          </div>
+        </div>
+
+        <div class="sk-card reveal-up">
+          <div class="sk-head"><span class="sk-icon" style="--ic:#3b82f6">💻</span><h3>Programming</h3></div>
+          <div class="bars">
+            <div class="bar-row"><span>Python</span><div class="bar-track"><div class="bar-fill" data-w="92"></div></div><span class="pct">92%</span></div>
+            <div class="bar-row"><span>Bash / Shell</span><div class="bar-track"><div class="bar-fill" data-w="80"></div></div><span class="pct">80%</span></div>
+            <div class="bar-row"><span>TypeScript / React</span><div class="bar-track"><div class="bar-fill" data-w="75"></div></div><span class="pct">75%</span></div>
+            <div class="bar-row"><span>SQL</span><div class="bar-track"><div class="bar-fill" data-w="72"></div></div><span class="pct">72%</span></div>
+          </div>
+        </div>
+
+        <div class="sk-card reveal-up">
+          <div class="sk-head"><span class="sk-icon" style="--ic:#8b5cf6">🧠</span><h3>AI / ML Security</h3></div>
+          <div class="bars">
+            <div class="bar-row"><span>LSTM Models</span><div class="bar-track"><div class="bar-fill" data-w="83"></div></div><span class="pct">83%</span></div>
+            <div class="bar-row"><span>Anomaly Detection</span><div class="bar-track"><div class="bar-fill" data-w="85"></div></div><span class="pct">85%</span></div>
+            <div class="bar-row"><span>Insider Threat ML</span><div class="bar-track"><div class="bar-fill" data-w="80"></div></div><span class="pct">80%</span></div>
+            <div class="bar-row"><span>AI Automation</span><div class="bar-track"><div class="bar-fill" data-w="78"></div></div><span class="pct">78%</span></div>
+          </div>
+        </div>
+
+        <div class="sk-card reveal-up">
+          <div class="sk-head"><span class="sk-icon" style="--ic:#10b981">☁️</span><h3>Cloud &amp; DevSecOps</h3></div>
+          <div class="bars">
+            <div class="bar-row"><span>Cloud Security</span><div class="bar-track"><div class="bar-fill" data-w="75"></div></div><span class="pct">75%</span></div>
+            <div class="bar-row"><span>Security Dashboards</span><div class="bar-track"><div class="bar-fill" data-w="88"></div></div><span class="pct">88%</span></div>
+            <div class="bar-row"><span>NIST CSF Compliance</span><div class="bar-track"><div class="bar-fill" data-w="82"></div></div><span class="pct">82%</span></div>
+            <div class="bar-row"><span>Security Auditing</span><div class="bar-track"><div class="bar-fill" data-w="80"></div></div><span class="pct">80%</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────── PROJECTS ─────────── -->
+  <section class="section projects-section" id="projects">
+    <div class="container">
+      <div class="eyebrow reveal-up"><span class="ew-line"></span>Work</div>
+      <div class="ph-row">
+        <h2 class="section-heading reveal-up">Selected <span class="clip-text">Projects</span></h2>
+        <a class="btn-outline reveal-up" href="https://github.com/Unknown1502?tab=repositories" target="_blank" rel="noopener">All 25 repos ↗</a>
+      </div>
+
+      <div id="projList" class="proj-list"></div>
+    </div>
+  </section>
+
+
+  <!-- ─────────── STATS ─────────── -->
+  <section class="section stats-section" id="stats">
+    <div class="stats-glow" aria-hidden="true"></div>
+    <div class="container">
+      <div class="eyebrow reveal-up"><span class="ew-line"></span>GitHub Activity</div>
+      <h2 class="section-heading center reveal-up">By the <span class="clip-text">Numbers</span></h2>
+
+      <div class="stats-row">
+        <div class="st-item reveal-up"><div class="st-num"><span class="counter" data-count="25">0</span>+</div><div class="st-lbl">Public Repos</div></div>
+        <div class="st-sep reveal-up"></div>
+        <div class="st-item reveal-up"><div class="st-num"><span class="counter" data-count="160">0</span>+</div><div class="st-lbl">Contributions</div></div>
+        <div class="st-sep reveal-up"></div>
+        <div class="st-item reveal-up"><div class="st-num"><span class="counter" data-count="6">0</span></div><div class="st-lbl">Languages</div></div>
+        <div class="st-sep reveal-up"></div>
+        <div class="st-item reveal-up"><div class="st-num"><span class="counter" data-count="3">0</span>+</div><div class="st-lbl">Stars</div></div>
+      </div>
+
+      <div class="gh-imgs reveal-up">
+        <div class="gh-img-wrap">
+          <img src="https://github-readme-stats.vercel.app/api?username=Unknown1502&theme=tokyonight&hide_border=true&show_icons=true&bg_color=0d1220&title_color=6ee7b7&icon_color=818cf8&text_color=94a3b8" alt="GitHub Stats" loading="lazy" />
+        </div>
+        <div class="gh-img-wrap">
+          <img src="https://github-readme-streak-stats.herokuapp.com/?user=Unknown1502&theme=tokyonight&hide_border=true&background=0d1220&ring=6ee7b7&fire=818cf8&currStreakLabel=6ee7b7" alt="GitHub Streak" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────── CONTACT ─────────── -->
+  <section class="section contact-section" id="contact">
+    <div class="contact-glow" aria-hidden="true"></div>
+    <div class="container">
+      <div class="eyebrow reveal-up"><span class="ew-line"></span>Contact</div>
+      <h2 class="section-heading center reveal-up">Let's build something<br><span class="clip-text">secure together.</span></h2>
+      <p class="contact-sub reveal-up">Whether it's a security engagement, joint research, or a quick hello — I'm always reachable.</p>
+
+      <div class="contact-grid">
+        <a class="ct-tile reveal-up magnetic" href="mailto:prajwalsutar116@gmail.com">
+          <div class="ct-icon" style="--ti:#6ee7b7">✉️</div>
+          <div class="ct-body"><h3>Email</h3><span>prajwalsutar116@gmail.com</span></div>
+          <div class="ct-arrow">↗</div>
+        </a>
+        <a class="ct-tile reveal-up magnetic" href="https://www.linkedin.com/in/prajwalsutar116" target="_blank" rel="noopener">
+          <div class="ct-icon" style="--ti:#818cf8">💼</div>
+          <div class="ct-body"><h3>LinkedIn</h3><span>prajwalsutar116</span></div>
+          <div class="ct-arrow">↗</div>
+        </a>
+        <a class="ct-tile reveal-up magnetic" href="https://github.com/Unknown1502" target="_blank" rel="noopener">
+          <div class="ct-icon" style="--ti:#f472b6">
+            <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          </div>
+          <div class="ct-body"><h3>GitHub</h3><span>Unknown1502</span></div>
+          <div class="ct-arrow">↗</div>
+        </a>
+        <a class="ct-tile reveal-up magnetic" href="https://tryhackme.com/r/p/unknownroot" target="_blank" rel="noopener">
+          <div class="ct-icon" style="--ti:#fb923c">⚔️</div>
+          <div class="ct-body"><h3>TryHackMe</h3><span>unknownroot</span></div>
+          <div class="ct-arrow">↗</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ─────────── FOOTER ─────────── -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-l">
+        <a class="nav-logo" href="#home">
+          <div class="logo-mark">PS</div>
+          <span class="logo-text">prajwal<span class="accent-dot">.</span>dev</span>
+        </a>
+        <p>Cybersecurity Engineer · SOC Analyst<br>AI/ML Security Solutions Developer</p>
+      </div>
+      <div class="footer-r">
+        <div class="fc"><h5>Navigate</h5><a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#contact">Contact</a></div>
+        <div class="fc"><h5>Connect</h5><a href="https://github.com/Unknown1502" target="_blank">GitHub</a><a href="https://www.linkedin.com/in/prajwalsutar116" target="_blank">LinkedIn</a><a href="https://tryhackme.com/r/p/unknownroot" target="_blank">TryHackMe</a><a href="mailto:prajwalsutar116@gmail.com">Email</a></div>
+      </div>
+    </div>
+    <div class="footer-bar">
+      <span>© <span id="fyear">2026</span> Prajwal Sutar</span>
+      <span class="fb-sep">·</span>
+      <span>Built with passion &amp; caffeine ☕</span>
+    </div>
+  </footer>
+
+  <!-- ─── ADMIN PANEL ─── -->
+  <div class="adm-overlay" id="admOverlay"></div>
+  <aside class="adm-panel" id="admPanel" aria-hidden="true">
+    <div class="adm-head">
+      <span class="adm-title">⚙ Project Manager</span>
+      <button class="adm-x" id="admClose" aria-label="Close">✕</button>
+    </div>
+    <div class="adm-body">
+      <button class="adm-add-btn" id="admAddBtn">+ Add Project</button>
+      <div id="admList" class="adm-list"></div>
+    </div>
+  </aside>
+
+  <!-- ─── PROJECT FORM MODAL ─── -->
+  <div class="fm-backdrop" id="fmBackdrop"></div>
+  <div class="fm-modal" id="fmModal" role="dialog" aria-modal="true" aria-labelledby="fmTitle">
+    <div class="fm-head">
+      <h3 id="fmTitle">Add Project</h3>
+      <button class="adm-x" id="fmClose" aria-label="Close">✕</button>
+    </div>
+    <form id="projForm" class="fm-form" novalidate>
+      <input type="hidden" id="fId" />
+      <div class="fm-group">
+        <label for="fTitle">Title <span class="req">*</span></label>
+        <input type="text" id="fTitle" placeholder="e.g. My Cool Tool" required />
+      </div>
+      <div class="fm-group">
+        <label for="fDesc">Description <span class="req">*</span></label>
+        <textarea id="fDesc" rows="3" placeholder="What does it do?" required></textarea>
+      </div>
+      <div class="fm-row">
+        <div class="fm-group">
+          <label for="fLang">Language / Stack</label>
+          <input type="text" id="fLang" placeholder="Python, JS, …" />
+        </div>
+        <div class="fm-group">
+          <label for="fColor">Accent Color</label>
+          <input type="color" id="fColor" value="#6ee7b7" class="fm-color" />
+        </div>
+      </div>
+      <div class="fm-group">
+        <label for="fTags">Tags <span class="fm-hint">(comma separated)</span></label>
+        <input type="text" id="fTags" placeholder="AI/ML, Security, …" />
+      </div>
+      <div class="fm-group">
+        <label for="fUrl">GitHub URL</label>
+        <input type="url" id="fUrl" placeholder="https://github.com/…" />
+      </div>
+      <div class="fm-actions">
+        <button type="button" class="fm-cancel" id="fmCancel">Cancel</button>
+        <button type="submit" class="fm-save">Save Project</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- ─── ADMIN FAB ─── -->
+  <button class="adm-fab" id="admFab" title="Admin Panel (Ctrl+Shift+A)">⚙</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
