@@ -335,6 +335,7 @@ $$('.bento .b-card').forEach((el, i) => {
    16. PROJECTS CRUD
 ══════════════════════════════════════════ */
 const PROJ_KEY = 'ps_projects';
+let ADMIN_PASSWORD = '';
 
 const DEFAULT_PROJECTS = [
   {
@@ -381,11 +382,14 @@ const DEFAULT_PROJECTS = [
   }
 ];
 
-function loadProjects() {
+async function loadProjects() {
   try {
-    const raw = localStorage.getItem(PROJ_KEY);
-    return raw ? JSON.parse(raw) : [...DEFAULT_PROJECTS];
-  } catch { return [...DEFAULT_PROJECTS]; }
+    const response = await fetch('/api/projects');
+    const projects = await response.json();
+    return projects.length ? projects : DEFAULT_PROJECTS;
+  } catch {
+    return DEFAULT_PROJECTS;
+  }
 }
 
 function saveProjects(arr) {
@@ -396,10 +400,10 @@ function uid() {
   return 'p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
-function renderProjects() {
+async function renderProjects() {
   const list = $('#projList');
   if (!list) return;
-  const projects = loadProjects();
+  const projects = await loadProjects();
   list.innerHTML = '';
   projects.forEach((p, i) => {
     const item = document.createElement('div');
@@ -420,17 +424,14 @@ function renderProjects() {
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
       </a>` : '<span class="pi-btn pi-nolnk" aria-hidden="true"></span>'}
     `;
-    // stagger + reveal
     item.style.setProperty('--d', `${i * 70}ms`);
     revealIO.observe(item);
     list.appendChild(item);
   });
 
-  // re-attach project accent border color logic
   $$('.proj-item').forEach(pi => {
     const col = pi.dataset.accent;
     if (col) pi.style.setProperty('--ac', col);
-    // magnetic reattach
     pi.querySelectorAll('.magnetic').forEach(btn => {
       btn.addEventListener('mousemove', e => {
         const r = btn.getBoundingClientRect();
@@ -451,6 +452,9 @@ function escHtml(s) {
 let adminOpen = false;
 
 function openAdmin() {
+  const password = prompt('Enter admin password:');
+  if (!password) return;
+  ADMIN_PASSWORD = password;
   adminOpen = true;
   const panel = $('#admPanel');
   const overlay = $('#admOverlay');
@@ -471,10 +475,10 @@ function closeAdmin() {
   if (fab) fab.classList.remove('adm-active');
 }
 
-function renderAdminList() {
+async function renderAdminList() {
   const list = $('#admList');
   if (!list) return;
-  const projects = loadProjects();
+  const projects = await loadProjects();
   if (!projects.length) {
     list.innerHTML = '<p class="adm-empty">No projects yet. Add one!</p>';
     return;
@@ -498,16 +502,22 @@ function renderAdminList() {
   });
 }
 
-function deleteProject(id) {
+async function deleteProject(id) {
   if (!confirm('Delete this project?')) return;
-  const arr = loadProjects().filter(p => p.id !== id);
-  saveProjects(arr);
-  renderAdminList();
-  renderProjects();
+  try {
+    await fetch('/api/delete-project', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, password: ADMIN_PASSWORD })
+    });
+    renderAdminList();
+    renderProjects();
+  } catch {
+    alert('Failed to delete project');
+  }
 }
 
-// ── Form Modal ───────────────────────────────────────────────
-function openForm(editId) {
+async function openForm(editId) {
   const modal = $('#fmModal');
   const backdrop = $('#fmBackdrop');
   const titleEl = $('#fmTitle');
@@ -521,7 +531,8 @@ function openForm(editId) {
   const imagePreview = $('#fImagePreview');
 
   if (editId) {
-    const p = loadProjects().find(x => x.id === editId);
+    const projects = await loadProjects();
+    const p = projects.find(x => x.id === editId);
     if (!p) return;
     titleEl.textContent = 'Edit Project';
     idEl.value = p.id;
@@ -593,12 +604,13 @@ if (projForm) {
     }
 
     let imageUrl = '';
-    const existingProject = loadProjects().find(p => p.id === id);
+    const projects = await loadProjects();
+    const existingProject = projects.find(p => p.id === id);
     
     if (imageFile) {
       const reader = new FileReader();
       reader.readAsDataURL(imageFile);
-      await new Promise(resolve => {
+      const uploadOk = await new Promise(resolve => {
         reader.onload = async () => {
           try {
             const response = await fetch('/api/upload', {
@@ -607,28 +619,39 @@ if (projForm) {
               body: JSON.stringify({ image: reader.result })
             });
             const data = await response.json();
+            if (!response.ok || !data.url) {
+              alert('Image upload failed: ' + (data.error || 'Unknown error. Check Cloudinary env vars.'));
+              resolve(false);
+              return;
+            }
             imageUrl = data.url;
-            resolve();
-          } catch {
-            imageUrl = existingProject?.image || '';
-            resolve();
+            resolve(true);
+          } catch (err) {
+            alert('Image upload failed: ' + err.message);
+            resolve(false);
           }
         };
       });
+      if (!uploadOk) return; // stop — don't save project with broken image
     } else {
       imageUrl = existingProject?.image || '';
     }
 
-    let projects = loadProjects();
-    if (id) {
-      projects = projects.map(p => p.id === id ? { ...p, title, desc, lang, color, tags, url, image: imageUrl } : p);
-    } else {
-      projects.push({ id: uid(), title, desc, lang, color, tags, url, image: imageUrl });
+    try {
+      await fetch('/api/save-project', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          project: { id, title, desc, lang, color, tags, url, image: imageUrl },
+          password: ADMIN_PASSWORD 
+        })
+      });
+      closeForm();
+      renderAdminList();
+      renderProjects();
+    } catch {
+      alert('Failed to save project');
     }
-    saveProjects(projects);
-    closeForm();
-    renderAdminList();
-    renderProjects();
   });
 }
 
@@ -663,9 +686,9 @@ if (imageInput && imagePreview) {
   });
 }
 
-// Show FAB always (it's the access point)
+// FAB is hidden from public — admin access via Ctrl+Shift+A only
 const fabEl = $('#admFab');
-if (fabEl) fabEl.style.display = '';
+if (fabEl) fabEl.style.display = 'none';
 
 // Initial render
 renderProjects();
