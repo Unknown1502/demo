@@ -13,8 +13,7 @@ export default async function handler(req, res) {
     const params = new URLSearchParams();
     params.append('file', req.body.image);          // base64 data-URI
     params.append('upload_preset', uploadPreset);
-    params.append('display_name', 'project_image_' + Date.now());
-    params.append('public_id', 'projects/' + Date.now());
+    params.append('public_id', 'project_' + Date.now());
 
     const response = await fetch(CLOUDINARY_URL, {
       method: 'POST',
