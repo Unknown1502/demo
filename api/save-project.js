@@ -22,7 +22,8 @@ export default async function handler(req, res) {
       if (index !== -1) {
         projects[index] = { id, title, desc, lang, color, tags, url, image };
       } else {
-        return res.status(404).json({ error: 'Project not found' });
+        // Not in DB yet (e.g. default project) — add it
+        projects.push({ id, title, desc, lang, color, tags, url, image });
       }
     } else {
       projects.push({ id: Date.now().toString(), title, desc, lang, color, tags, url, image });
