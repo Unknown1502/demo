@@ -608,31 +608,23 @@ if (projForm) {
     const existingProject = projects.find(p => p.id === id);
     
     if (imageFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(imageFile);
-      const uploadOk = await new Promise(resolve => {
-        reader.onload = async () => {
-          try {
-            const response = await fetch('/api/upload', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ image: reader.result })
-            });
-            const data = await response.json();
-            if (!response.ok || !data.url) {
-              alert('Image upload failed: ' + (data.error || 'Unknown error. Check Cloudinary env vars.'));
-              resolve(false);
-              return;
-            }
-            imageUrl = data.url;
-            resolve(true);
-          } catch (err) {
-            alert('Image upload failed: ' + err.message);
-            resolve(false);
-          }
-        };
+      // Upload directly from browser to Cloudinary (unsigned upload)
+      const formData = new FormData();
+      formData.append('file', imageFile);
+      formData.append('upload_preset', 'CLOUDINARY_UPLOAD_PRESET');
+      formData.append('public_id', 'project_' + Date.now());
+
+      const uploadRes = await fetch('https://api.cloudinary.com/v1_1/dgt7a3opq/image/upload', {
+        method: 'POST',
+        body: formData
       });
-      if (!uploadOk) return; // stop — don't save project with broken image
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok || !uploadData.secure_url) {
+        alert('Image upload failed: ' + (uploadData.error?.message || 'Unknown error'));
+        return;
+      }
+      imageUrl = uploadData.secure_url;
     } else {
       imageUrl = existingProject?.image || '';
     }
