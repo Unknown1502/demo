@@ -612,7 +612,6 @@ if (projForm) {
       const formData = new FormData();
       formData.append('file', imageFile);
       formData.append('upload_preset', 'CLOUDINARY_UPLOAD_PRESET');
-      formData.append('public_id', 'project_' + Date.now());
 
       const uploadRes = await fetch('https://api.cloudinary.com/v1_1/dgt7a3opq/image/upload', {
         method: 'POST',
@@ -630,7 +629,7 @@ if (projForm) {
     }
 
     try {
-      await fetch('/api/save-project', {
+      const saveRes = await fetch('/api/save-project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -638,11 +637,16 @@ if (projForm) {
           password: ADMIN_PASSWORD 
         })
       });
+      const saveData = await saveRes.json();
+      if (!saveRes.ok) {
+        alert('Failed to save project: ' + (saveData.error || saveRes.status));
+        return;
+      }
       closeForm();
       renderAdminList();
       renderProjects();
-    } catch {
-      alert('Failed to save project');
+    } catch (err) {
+      alert('Failed to save project: ' + err.message);
     }
   });
 }
