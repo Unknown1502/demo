@@ -1,6 +1,5 @@
-import { createClient } from 'redis';
+import { kv } from '@vercel/kv';
 
-const REDIS_URL = 'rediss://default:gBQEi3EW3mfO6X42ooVuslyWTgQXz1U1@redis-15395.c85.us-east-1-2.ec2.cloud.redislabs.com:15395';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 export default async function handler(req, res) {
@@ -14,16 +13,8 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized — wrong password' });
   }
 
-  const client = createClient({
-    url: REDIS_URL,
-    socket: { tls: true, rejectUnauthorized: false, connectTimeout: 8000 }
-  });
-  client.on('error', err => console.error('Redis error:', err));
-
   try {
-    await client.connect();
-    const raw = await client.get('projects');
-    const projects = raw ? JSON.parse(raw) : [];
+    const projects = await kv.get('projects') || [];
     const { id, title, desc, lang, color, tags, url, image } = req.body.project;
 
     if (id) {
@@ -37,12 +28,10 @@ export default async function handler(req, res) {
       projects.push({ id: Date.now().toString(), title, desc, lang, color, tags, url, image });
     }
 
-    await client.set('projects', JSON.stringify(projects));
+    await kv.set('projects', projects);
     return res.status(200).json({ success: true, projects });
   } catch (error) {
     console.error('save-project.js error:', error);
     return res.status(500).json({ error: 'Failed to save project: ' + error.message });
-  } finally {
-    await client.disconnect();
   }
 }
