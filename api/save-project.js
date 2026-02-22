@@ -1,10 +1,9 @@
 import { createClient } from 'redis';
 
-const REDIS_URL = process.env.REDIS_URL || 'redis://default:gBQEi3EW3mfO6X42ooVuslyWTgQXz1U1@redis-15395.c85.us-east-1-2.ec2.cloud.redislabs.com:15395';
+const REDIS_URL = 'rediss://default:gBQEi3EW3mfO6X42ooVuslyWTgQXz1U1@redis-15395.c85.us-east-1-2.ec2.cloud.redislabs.com:15395';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 export default async function handler(req, res) {
-  // Handle CORS preflight
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -12,10 +11,13 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   if (req.body.password !== ADMIN_PASSWORD) {
-    return res.status(401).json({ error: 'Unauthorized' });
+    return res.status(401).json({ error: 'Unauthorized — wrong password' });
   }
 
-  const client = createClient({ url: REDIS_URL });
+  const client = createClient({
+    url: REDIS_URL,
+    socket: { tls: true, rejectUnauthorized: false, connectTimeout: 8000 }
+  });
   client.on('error', err => console.error('Redis error:', err));
 
   try {
@@ -39,7 +41,7 @@ export default async function handler(req, res) {
     return res.status(200).json({ success: true, projects });
   } catch (error) {
     console.error('save-project.js error:', error);
-    return res.status(500).json({ error: 'Failed to save project' });
+    return res.status(500).json({ error: 'Failed to save project: ' + error.message });
   } finally {
     await client.disconnect();
   }
