@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
 
-  const client = createClient({ url: process.env.REDIS_URL });
+  const client = createClient({ url: process.env.REDIS_URL || 'redis://default:gBQEi3EW3mfO6X42ooVuslyWTgQXz1U1@redis-15395.c85.us-east-1-2.ec2.cloud.redislabs.com:15395' });
   try {
     await client.connect();
     const raw = await client.get('projects');
