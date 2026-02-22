@@ -14,6 +14,7 @@ export default async function handler(req, res) {
     params.append('file', req.body.image);          // base64 data-URI
     params.append('upload_preset', uploadPreset);
     params.append('public_id', 'project_' + Date.now());
+    params.append('filename_override', 'project_' + Date.now());
 
     const response = await fetch(CLOUDINARY_URL, {
       method: 'POST',
