@@ -1,12 +1,8 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
-
-  if (!cloudName || !uploadPreset) {
-    return res.status(500).json({ error: 'Cloudinary env vars not configured' });
-  }
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || 'dgt7a3opq';
+  const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET || 'CLOUDINARY_UPLOAD_PRESET';
 
   const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
